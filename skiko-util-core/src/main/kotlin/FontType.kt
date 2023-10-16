@@ -31,6 +31,8 @@ enum class FontType(name: String) {
     MINECRAFT("Minecraft.ttf"),
     ZHONG_SONG("STZHONGS.TTF"),
     GNU_UNIFONT("gnu-unifont-full.ttf"),
+    GLOW_SANS("GlowSansSC-Normal-Heavy.otf"),
+    RO_G_SAN_SRF_STD("RoGSanSrfStd-Bd.otf"),
     LI_HEI("力黑体.otf");
 
     private val bytes by lazy { File("${fontDir}/$name").readBytes() }
