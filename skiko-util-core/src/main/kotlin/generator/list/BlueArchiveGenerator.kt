@@ -30,7 +30,7 @@ object BlueArchiveGenerator : ImageGenerator {
         val y = args["y"]?.toFloatOrNull() ?: 0F
         val lStyle = TextStyle()
             .setFontFamilies(families)
-            .setColor(0xff128afa.toInt())
+            .setColor(0xff357cc0.toInt())
             .setFontStyle(FontStyle(FontWeight.BOLD, FontWidth.NORMAL, FontSlant.OBLIQUE))
             .setFontSize(FONT_SIZE)
             .setBackground(Paint().apply { color = Colors.WHITE.argb })
