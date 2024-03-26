@@ -15,9 +15,9 @@ import kotlin.math.min
 
 @ImageHandler
 object WriteHandler : FramesHandler {
-    private const val minSize = 20
-    private const val maxSize = 1000
-    private const val unit = 10
+    private const val MIN_SIZE = 20
+    private const val MAX_SIZE = 1000
+    private const val UNIT = 10
     private val tf = FontType.MI.typeface
 
     override val name = "drawstring"
@@ -28,7 +28,7 @@ object WriteHandler : FramesHandler {
         args: MutableMap<String, String>,
     ): HandleResult {
         val text = args["text"]!!
-        var size = args["size"]?.toIntOrNull()
+        var padding = args["padding"]?.intOrPercentage(-100)
         var stroke = args["stroke"]?.toIntOrNull()
         val bgColor = args["bgColor"]?.asColor() ?: Colors.WHITE.argb
         val textColor = args["textColor"]?.asColor() ?: Colors.WHITE.argb
@@ -36,9 +36,13 @@ object WriteHandler : FramesHandler {
         val location = args["location"]?.let { Location.valueOf(it.uppercase()) } ?: OUTSIDE_BOTTOM
         val texts = text.split("\n")
         val w = frames[0].image.width
-        val maxWidth = w - min(20, w * 10 / 9)
-        size = size ?: texts.minOf {
-            autoSize(tf, it, minSize, maxSize, maxWidth, unit)
+
+        padding = padding?.let {
+            if (it > 0) it else w * -it / 100
+        } ?: min(w / 20, 100)
+        val maxWidth = w - padding * 2
+        val size = texts.minOf {
+            autoSize(tf, it, MIN_SIZE, MAX_SIZE, maxWidth, UNIT)
         }
         stroke = stroke ?: (size / 10)
         val spacing = min(size / 3, 30)
