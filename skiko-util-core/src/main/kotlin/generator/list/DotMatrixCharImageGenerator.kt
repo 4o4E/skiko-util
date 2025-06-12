@@ -25,7 +25,6 @@ object DotMatrixCharImageGenerator : ImageGenerator {
             args["ud"]?.toIntOrNull() ?: 0,
             args["lr"]?.toIntOrNull() ?: 0
         )
-        println(generator)
         val lines = generator.lines().map { TextLine.make(it, font) }
 
         return mutableListOf(
