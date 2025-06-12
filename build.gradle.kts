@@ -4,7 +4,6 @@ import kotlin.apply
 
 plugins {
     kotlin("jvm") version Versions.kotlin
-    kotlin("kapt") version Versions.kotlin
     kotlin("plugin.serialization") version Versions.kotlin
     `maven-publish`
     `java-library`
