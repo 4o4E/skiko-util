@@ -55,7 +55,7 @@ enum class FontType(name: String) {
                 if (isDirectory) listFiles()?.forEach { it.registerAsFont() }
                 else {
                     fontMgr.forEach {
-                        it.registerTypeface(Typeface.makeFromFile(this.path, 0))
+                        it.registerTypeface(it.makeFromFile(this.path))
                     }
                 }
             }
