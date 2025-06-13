@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package top.e404.dbf
 
 import java.io.BufferedReader
@@ -75,9 +77,9 @@ object BdfParser {
      */
     const val END_PROPERTIES = "ENDPROPERTIES"
 
-    fun parse(file: File): BdfFont {
-        return file.bufferedReader().use(::parse)
-    }
+    fun parse(file: File) = file.bufferedReader().use(::parse)
+
+    fun parse(text: String) = text.reader().buffered().use(::parse)
 
     fun parse(reader: BufferedReader): BdfFont {
         val header = parseHeader(reader)
@@ -89,7 +91,7 @@ object BdfParser {
         return BdfFont(header, map)
     }
 
-    fun parseHeader(reader: BufferedReader): BdfHeader {
+    private fun parseHeader(reader: BufferedReader): BdfHeader {
         val version = reader.readLine().removePrefix(START_FONT).trim()
         val map = mutableMapOf<String, String>()
         var properties = mutableMapOf<String, String>()
@@ -129,7 +131,7 @@ object BdfParser {
         )
     }
 
-    fun parseFont(reader: BufferedReader): BdfChar {
+    private fun parseFont(reader: BufferedReader): BdfChar {
         val map = mutableMapOf<String, String>()
         val split = reader.readLine().split(" ")
         require(split.size == 2)
@@ -242,34 +244,3 @@ class BdfChar(
     val bbx: FontBoundingBox,
     val bitMatrix: BitMatrix
 )
-
-fun BitMatrix.printMatrix() {
-    for (y in 0 until height) {
-        for (x in 0 until width) {
-            print(if (get(x, y)) "⬛" else "⬜️")
-        }
-        println()
-    }
-}
-
-fun printByte(b: Int) = buildString {
-    for (i in 7 downTo 0) {
-        append(b shr i and 1)
-    }
-}
-
-fun main() {
-    val bdfFont = BdfParser.parse(File("F:\\D\\unifont-15.0.03.bdf"))
-    bdfFont.getBitmaps("张").forEach {
-        if (it == null) {
-            println(null)
-            return@forEach
-        }
-        it.bitMatrix.printMatrix()
-        println()
-        it.bitMatrix[0, 1] = false
-        it.bitMatrix[1, 1] = false
-        it.bitMatrix[2, 1] = false
-        it.bitMatrix.printMatrix()
-    }
-}
