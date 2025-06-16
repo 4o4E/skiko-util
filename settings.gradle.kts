@@ -10,10 +10,12 @@ pluginManagement {
 
 rootProject.name = "skiko-util"
 include(
-    ":skiko-util-ksp",
-    ":skiko-util-core",
-    ":skiko-util-gif-codec",
-    ":skiko-util-draw",
-    ":skiko-util-util",
-    ":skiko-util-bdf-parser",
+    ":annotation",
+    ":ksp",
+    ":bdf-parser",
+    ":gif-codec",
+    ":draw",
+    ":core",
+    ":util",
+    ":http-server",
 )

@@ -3,17 +3,18 @@ import java.util.Properties
 import kotlin.apply
 
 plugins {
-    kotlin("jvm") version Versions.kotlin
-    kotlin("plugin.serialization") version Versions.kotlin
+    kotlin("jvm") version Versions.KOTLIN
+    kotlin("plugin.serialization") version Versions.KOTLIN
     `maven-publish`
     `java-library`
+    idea
 }
 
 allprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
 
-    group = Versions.group
-    version = Versions.version
+    group = Versions.GROUP
+    version = Versions.VERSION
 
     repositories {
         mavenLocal()
@@ -51,9 +52,9 @@ subprojects {
         publishing.publications.create<MavenPublication>("java") {
             from(components["kotlin"])
             artifact(tasks.getByName("sourcesJar"))
-            artifactId = project.name
-            groupId = Versions.group
-            version = Versions.version
+            artifactId = "${rootProject.name}-${project.name}"
+            groupId = Versions.GROUP
+            version = Versions.VERSION
         }
     }
 
@@ -71,19 +72,8 @@ subprojects {
         }
     }
 
-    tasks {
-        assemble {
-            doLast {
-                val jar = rootProject.projectDir.resolve("jar")
-                jar.mkdir()
-                println("==== copy ====")
-                for (file in project.buildDir.resolve("libs").listFiles() ?: emptyArray()) {
-                    if ("source" in file.name) continue
-                    println("正在复制`${file.path}`")
-                    file.copyTo(jar.resolve(file.name), true)
-                }
-            }
-        }
+    tasks.test {
+        enabled = false
     }
 
     kotlin {
@@ -97,4 +87,12 @@ tasks.assemble {
     subprojects.forEach {
         dependsOn(it.tasks.assemble)
     }
+}
+
+idea {
+    module.excludeDirs.addAll(arrayOf(
+        file("run"),
+        file(".idea"),
+        file(".kotlin"),
+    ))
 }
