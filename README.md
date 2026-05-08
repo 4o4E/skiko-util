@@ -1,4 +1,8 @@
-# skiko-util
+# PixelForge
+
+> [!IMPORTANT]
+> 项目已迁移到新仓库：[https://github.com/4o4E/PixelForge.git](https://github.com/4o4E/PixelForge.git)。
+> 当前 `skiko-util` 仓库仅作为历史归档保留，不再维护；后续开发、问题反馈和版本发布请使用新仓库。
 
 基于[skiko](https://github.com/JetBrains/skiko)的绘图工具库, 包括
 
