@@ -1,4 +1,4 @@
-# PixelForge
+# skiko-util
 
 > [!IMPORTANT]
 > 项目已迁移到新仓库：[Tavolo](https://github.com/4o4E/Tavolo)。
